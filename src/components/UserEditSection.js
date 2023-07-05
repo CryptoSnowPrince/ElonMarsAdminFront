@@ -1,9 +1,12 @@
 import { useState } from 'react';
+// import { useSelector } from 'react-redux' // TODO
 import moment from 'moment';
 import Dropdown from './Dropdown';
 import callApi from '../api/api';
 import { FIELDS } from '../utils/constant';
 // import Web3 from 'web3'; // TODO
+// import { isAccount, signMessageHash } from '../utils/utils';
+// import * as selector from '../store/selectors'
 
 // const web3Const = new Web3('https://bsc-dataseed1.binance.org')
 
@@ -11,6 +14,9 @@ const UserEditSection = ({
   onUpdate,
   onFail,
 }) => {
+  // const curWeb3 = useSelector(selector.web3State) // TODO
+  // const curAccount = useSelector(selector.curAccountState)
+
   const [field, setField] = useState(FIELDS[0]);
   const [addressText, setAddressText] = useState('');
   const [value, setValue] = useState(0);
@@ -18,42 +24,59 @@ const UserEditSection = ({
   const [loading, setLoading] = useState(false);
 
   const handleUpdate = async () => {
-    const addresses = addressText.toLowerCase().split('\n').filter(item => item);
-    if (addresses.length === 0) {
-      return;
-    }
-    // duplicate check
-    const duplicateCheck = {}
-    for (const addrValue of addresses) {
+    // if (curWeb3 && isAccount(curAccount)) { //TODO
+      const addresses = addressText.toLowerCase().split('\n').filter(item => item);
+      if (addresses.length === 0) {
+        return;
+      }
+      // duplicate check
+      const duplicateCheck = {}
+      for (const addrValue of addresses) {
         duplicateCheck[addrValue] = true
-    }
-    
-    const nonDuplicateAddresses = []
-    for (const dupIndex in duplicateCheck) {
+      }
+
+      const nonDuplicateAddresses = []
+      for (const dupIndex in duplicateCheck) {
         nonDuplicateAddresses.push(dupIndex)
-    }
-    
-    // // Address valid check TODO
-    // const validAddresses = nonDuplicateAddresses.filter(item => {
-    //     return web3Const.utils.isAddress(item)
-    // })
+      }
 
-    // // console.log("validAddresses: ", validAddresses)
+      // // Address valid check // TODO
+      // const validAddresses = nonDuplicateAddresses.filter(item => {
+      //     return web3Const.utils.isAddress(item)
+      // })
 
-    setLoading(true);
-    const res = await callApi('user/edit', 'post', {
-      addresses,
-      // validAddresses,
-      type: field.name,
-      value: field.type === 'date' ? date : value,
-    });
+      // // console.log("validAddresses: ", validAddresses)
 
-    if (res.success) {
-      onUpdate();
-    } else {
-      onFail(res.message);
-    }
-    setLoading(false);
+      setLoading(true);
+      const _data = {
+        // address: curAccount, // TODO
+        actionDate: Date.now()
+      }
+
+      // const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data)) // TODO
+      // if (_signData.success === true) {
+        const res = await callApi('user/edit', 'post', {
+          addresses, // TODO remove
+          // validAddresses, // TODO add
+          type: field.name,
+          value: field.type === 'date' ? date : value,
+          data: _data,
+          // signData: _signData.message, //TODO
+        });
+
+        if (res.success) {
+          onUpdate();
+        } else {
+          onFail(res.message);
+        }
+      // } // TODO
+      // else {
+      //   alert('Sign fail!');
+      // }
+      setLoading(false);
+    // } else {
+    //   alert('fail', 'Please wallet connect!');
+    // }
   }
 
   return (

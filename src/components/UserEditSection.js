@@ -3,6 +3,9 @@ import moment from 'moment';
 import Dropdown from './Dropdown';
 import callApi from '../api/api';
 import { FIELDS } from '../utils/constant';
+// import Web3 from 'web3'; // TODO
+
+// const web3Const = new Web3('https://bsc-dataseed1.binance.org')
 
 const UserEditSection = ({
   onUpdate,
@@ -15,16 +18,34 @@ const UserEditSection = ({
   const [loading, setLoading] = useState(false);
 
   const handleUpdate = async () => {
-    const addresses = addressText.split('\n').filter(item => item);
+    const addresses = addressText.toLowerCase().split('\n').filter(item => item);
     if (addresses.length === 0) {
       return;
     }
+    // duplicate check
+    const duplicateCheck = {}
+    for (const addrValue of addresses) {
+        duplicateCheck[addrValue] = true
+    }
+    
+    const nonDuplicateAddresses = []
+    for (const dupIndex in duplicateCheck) {
+        nonDuplicateAddresses.push(dupIndex)
+    }
+    
+    // // Address valid check TODO
+    // const validAddresses = nonDuplicateAddresses.filter(item => {
+    //     return web3Const.utils.isAddress(item)
+    // })
+
+    // // console.log("validAddresses: ", validAddresses)
 
     setLoading(true);
     const res = await callApi('user/edit', 'post', {
       addresses,
+      // validAddresses,
       type: field.name,
-      value: field.type === 'number' ? value : date,
+      value: field.type === 'date' ? date : value,
     });
 
     if (res.success) {

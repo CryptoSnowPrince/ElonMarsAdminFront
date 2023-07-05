@@ -1,5 +1,4 @@
 import { getType } from 'typesafe-actions';
-// import { RUN_MODE } from '../../constant';
 import * as actions from '../actions';
 
 export const defaultState = {

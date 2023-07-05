@@ -55,7 +55,7 @@ const UserEditSection = ({
         {field.type === 'number' ? (
           <div className="mt-4">
             <label htmlFor="value" className="block text-sm font-medium leading-6 text-gray-900">
-              Value
+              {field.desc}
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
@@ -73,7 +73,7 @@ const UserEditSection = ({
         ) : field.type === 'date' ? (
           <div className="mt-4">
             <label htmlFor="datepicker" className="block text-sm font-medium leading-6 text-gray-900">
-              Value
+              {field.desc}
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
@@ -85,6 +85,26 @@ const UserEditSection = ({
                 placeholder="Select date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+          </div>
+        ) : field.type === 'array' ? (
+          <div className="mt-4">
+            <label htmlFor="value" className="block text-sm font-medium leading-6 text-gray-900">
+              {field.desc}
+            </label>
+            <div className="relative mt-2 rounded-md shadow-sm">
+              <input
+                type="number"
+                min={1}
+                max={3}
+                name="value"
+                id="value"
+                className="block w-full rounded-md border-0 py-1.5 pl-4 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="0"
+                value={value}
+                onChange={(e) => setValue(+e.target.value)}
                 disabled={loading}
               />
             </div>

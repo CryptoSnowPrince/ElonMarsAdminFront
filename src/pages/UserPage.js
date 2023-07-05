@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import UserEditSection from '../components/UserEditSection';
 import UserTable from '../components/UserTable';
 import EditModal from '../components/EditModal';
 import Notification from '../components/Notification';
 import callApi from '../api/api';
+import useAuth from '../hooks/useAuth';
+import { isAccount, getDisplayString } from '../utils/utils';
+import * as selector from '../store/selectors'
 
 const UserPage = () => {
+  const curWeb3 = useSelector(selector.web3State)
+  const curAccount = useSelector(selector.curAccountState)
+
+  const { login, logout } = useAuth()
+
   const [users, setUsers] = useState([]);
   const [selected, setSelected] = useState([]);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -38,8 +47,12 @@ const UserPage = () => {
   }
 
   const handleUpdate = () => {
-    getUserData();
-    showToast('success', 'Updated');
+    if (curWeb3 && isAccount(curAccount)) {
+      getUserData();
+      showToast('success', 'Updated');
+    } else {
+      showToast('fail', 'Please wallet connect!');
+    }
   }
 
   const handleFail = (text) => {
@@ -52,10 +65,10 @@ const UserPage = () => {
         <button
           type="button"
           className="w-full justify-center rounded-full bg-[#00FF1A] px-12 py-2 text-[24px] font-semibold text-white shadow-sm hover:bg-[#6366F1] sm:w-auto disabled:bg-gray-500"
-          onClick={handleUpdate} // TODO
+          onClick={curWeb3 && isAccount(curAccount) ? logout : login}
           disabled={false}
         >
-          Wallet Connection
+          {curWeb3 && isAccount(curAccount) ? getDisplayString(curAccount, 6, 4) : `Wallet Connection`}
         </button>
       </div>
       <h1 className='text-center text-[28px] font-medium pb-4'>Admin pannel</h1>

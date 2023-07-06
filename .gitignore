@@ -25,5 +25,3 @@ firebase.json
 
 # Local Netlify folder
 .netlify
-
-build

@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ee28b065.css",
+    "main.js": "/static/js/main.76b31699.js",
+    "static/js/253.efa318c9.chunk.js": "/static/js/253.efa318c9.chunk.js",
+    "static/media/power_plant.png": "/static/media/power_plant.3d6561015d54db1aca33.png",
+    "static/media/mining_module.png": "/static/media/mining_module.2ed71275a36d630c8ddd.png",
+    "static/media/gold_mine.png": "/static/media/gold_mine.a30416728d6964b1dc86.png",
+    "static/media/uranium_mine.png": "/static/media/uranium_mine.583f7dae7b3808eb1338.png",
+    "static/media/lands.png": "/static/media/lands.c04492b8c4ddc465798e.png",
+    "static/media/res_egg.png": "/static/media/res_egg.fe03bda46d2419e12691.png",
+    "static/media/res_gbaks.png": "/static/media/res_gbaks.eda382b8c3de81e68bb0.png",
+    "static/media/res_res.png": "/static/media/res_res.311fcb792a9094ef1374.png",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.ee28b065.css",
+    "static/js/main.76b31699.js"
+  ]
+}

@@ -58,7 +58,7 @@ const UserEditSection = ({
       // if (_signData.success === true) {
       if (true) {
         const res = await callApi('user/edit', 'post', {
-          validAddresses,
+          addresses: validAddresses,
           type: field.name,
           value: field.type === 'date' ? date : value,
           data: _data,

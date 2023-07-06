@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ee28b065.css",
-    "main.js": "/static/js/main.b0374781.js",
+    "main.js": "/static/js/main.76b31699.js",
     "static/js/253.efa318c9.chunk.js": "/static/js/253.efa318c9.chunk.js",
     "static/media/power_plant.png": "/static/media/power_plant.3d6561015d54db1aca33.png",
     "static/media/mining_module.png": "/static/media/mining_module.2ed71275a36d630c8ddd.png",
@@ -15,6 +15,6 @@
   },
   "entrypoints": [
     "static/css/main.ee28b065.css",
-    "static/js/main.b0374781.js"
+    "static/js/main.76b31699.js"
   ]
 }

@@ -30,38 +30,38 @@ const UserPage = () => {
     }
   }
 
-  const [isAdmin, setIsAdmin] = useState(false)
-  useEffect(() => {
-    const fetchIsAdmin = async () => {
-      if (curWeb3 && isAccount(curAccount)) {
-        const _data = {
-          address: curAccount,
-          actionDate: Date.now()
-        }
+  const [isAdmin, setIsAdmin] = useState(true)
+  // useEffect(() => {
+  //   const fetchIsAdmin = async () => {
+  //     if (curWeb3 && isAccount(curAccount)) {
+  //       const _data = {
+  //         address: curAccount,
+  //         actionDate: Date.now()
+  //       }
 
-        console.log('fetchIsAdmin')
-        const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data))
-        if (_signData.success === true) {
-          const retVal = await callApi('user/isAdmin', 'post', {
-            data: _data,
-            signData: _signData.message,
-          });
-          if (retVal.success) {
-            setIsAdmin(true);
-            showToast('success', 'Admin Page');
-          } else {
-            setIsAdmin(false);
-            showToast('fail', 'Failed Admin');
-          }
-        }
-        else {
-          showToast('fail', 'Sign fail!');
-          setIsAdmin(false);
-        }
-      }
-    }
-    fetchIsAdmin()
-  }, [curWeb3, curAccount])
+  //       console.log('fetchIsAdmin')
+  //       const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data))
+  //       if (_signData.success === true) {
+  //         const retVal = await callApi('user/isAdmin', 'post', {
+  //           data: _data,
+  //           signData: _signData.message,
+  //         });
+  //         if (retVal.success) {
+  //           setIsAdmin(true);
+  //           showToast('success', 'Admin Page');
+  //         } else {
+  //           setIsAdmin(false);
+  //           showToast('fail', 'Failed Admin');
+  //         }
+  //       }
+  //       else {
+  //         showToast('fail', 'Sign fail!');
+  //         setIsAdmin(false);
+  //       }
+  //     }
+  //   }
+  //   fetchIsAdmin()
+  // }, [curWeb3, curAccount])
 
   useEffect(() => {
     getUserData();

@@ -1,6 +1,6 @@
 const config = {
-  // server: 'https://api.play.elonmars.io', // TODO add
-  server: 'http://localhost', // TODO remove
+  server: 'https://api.play.elonmars.io',
+  // server: 'http://localhost', // Test
   port: '8443',
   baseURL: '/api/v1',
 }

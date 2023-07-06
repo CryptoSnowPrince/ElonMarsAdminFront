@@ -24,7 +24,8 @@ const UserEditSection = ({
   const [loading, setLoading] = useState(false);
 
   const handleUpdate = async () => {
-    if (curWeb3 && isAccount(curAccount)) {
+    if (true) {
+      // if (curWeb3 && isAccount(curAccount)) {
       const addresses = addressText.toLowerCase().split('\n').filter(item => item);
       if (addresses.length === 0) {
         return;

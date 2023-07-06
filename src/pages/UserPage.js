@@ -91,7 +91,7 @@ const UserPage = () => {
 
   return (
     <div className="w-full md:w-[90%] py-10 mt-10 mx-auto">
-      <div className="mt-0 text-right">
+      {/* <div className="mt-0 text-right">
         <button
           type="button"
           className="w-full justify-center rounded-full bg-[#00FF1A] px-12 py-2 text-[24px] font-semibold text-white shadow-sm hover:bg-[#6366F1] sm:w-auto disabled:bg-gray-500"
@@ -100,7 +100,7 @@ const UserPage = () => {
         >
           {curWeb3 && isAccount(curAccount) ? getDisplayString(curAccount, 6, 4) : `Wallet Connection`} 
         </button>
-      </div>
+      </div> */}
       <h1 className='text-center text-[28px] font-medium pb-4'>Admin pannel</h1>
       <div className="max-w-[72rem] mx-auto">
         {

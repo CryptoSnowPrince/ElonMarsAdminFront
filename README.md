@@ -1,9 +1,11 @@
 # ElonMarsAdminFront
 
-Windows 10
+## Environment
 
+### Windows 10
+
+Node 16.18.0
 Npm 8.19.2
 Yarn 1.22.19
-Node 16.18.0
 
 Please use Yarn

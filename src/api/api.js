@@ -4,8 +4,7 @@ import config from '../utils/config';
 const callApi = async (endpoint, method = 'get', data = {}) => {
   const apiConfig = {
     method,
-    url: `${config.server}${config.baseURL}/${endpoint}`,
-    // url: `${config.server}:${config.port}${config.baseURL}/${endpoint}`,
+    url: `${config.server}:${config.port}${config.baseURL}/${endpoint}`,
     headers: {},
     data
   }

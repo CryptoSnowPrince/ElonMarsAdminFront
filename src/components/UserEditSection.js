@@ -24,8 +24,7 @@ const UserEditSection = ({
   const [loading, setLoading] = useState(false);
 
   const handleUpdate = async () => {
-    if (true) {
-      // if (curWeb3 && isAccount(curAccount)) {
+    if (curWeb3 && isAccount(curAccount)) {
       const addresses = addressText.toLowerCase().split('\n').filter(item => item);
       if (addresses.length === 0) {
         return;
@@ -43,7 +42,7 @@ const UserEditSection = ({
 
       // Address valid check
       const validAddresses = nonDuplicateAddresses.filter(item => {
-          return web3Const.utils.isAddress(item)
+        return web3Const.utils.isAddress(item)
       })
 
       // console.log("validAddresses: ", validAddresses)
@@ -54,16 +53,14 @@ const UserEditSection = ({
         actionDate: Date.now()
       }
 
-      // const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data))
-      // if (_signData.success === true) {
-      if (true) {
+      const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data))
+      if (_signData.success === true) {
         const res = await callApi('user/edit', 'post', {
           addresses: validAddresses,
           type: field.name,
           value: field.type === 'date' ? date : value,
           data: _data,
-          // signData: _signData.message,
-          signData: '_signData.message',
+          signData: _signData.message,
         });
 
         if (res.success) {

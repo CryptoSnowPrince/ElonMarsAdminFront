@@ -1,9 +1,15 @@
 import { Fragment, useRef, useState, useEffect } from 'react'
 import moment from 'moment';
+import { useSelector } from 'react-redux'
 import { Dialog, Transition } from '@headlessui/react'
 import Dropdown from './Dropdown';
 import callApi from '../api/api';
 import { FIELDS } from '../utils/constant';
+import Web3 from 'web3';
+import * as selector from '../store/selectors'
+import { isAccount, signMessageHash } from '../utils/utils';
+
+const web3Const = new Web3('https://bsc-dataseed1.binance.org')
 
 const EditModal = ({
   open,
@@ -12,6 +18,9 @@ const EditModal = ({
   onUpdate,
   onFail,
 }) => {
+  const curWeb3 = useSelector(selector.web3State)
+  const curAccount = useSelector(selector.curAccountState)
+
   const [field, setField] = useState(FIELDS[0]);
   const [value, setValue] = useState(0);
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
@@ -25,19 +34,57 @@ const EditModal = ({
   }, [open]);
 
   const handleUpdate = async () => {
-    setLoading(true);
-    const res = await callApi('user/edit', 'post', {
-      addresses,
-      type: field.name,
-      value: field.type === 'number' ? value : date,
-    });
+    if (curWeb3 && isAccount(curAccount)) {
+      if (addresses.length === 0) {
+        return;
+      }
+      // duplicate check
+      const duplicateCheck = {}
+      for (const addrValue of addresses) {
+        duplicateCheck[addrValue] = true
+      }
 
-    if (res.success) {
-      onUpdate();
+      const nonDuplicateAddresses = []
+      for (const dupIndex in duplicateCheck) {
+        nonDuplicateAddresses.push(dupIndex)
+      }
+
+      // Address valid check
+      const validAddresses = nonDuplicateAddresses.filter(item => {
+        return web3Const.utils.isAddress(item)
+      })
+
+      // console.log("validAddresses: ", validAddresses)
+
+      setLoading(true);
+      const _data = {
+        address: curAccount,
+        actionDate: Date.now()
+      }
+
+      const _signData = await signMessageHash(curWeb3, curAccount, JSON.stringify(_data))
+      if (_signData.success === true) {
+        const res = await callApi('user/edit', 'post', {
+          addresses: validAddresses,
+          type: field.name,
+          value: field.type === 'date' ? date : value,
+          data: _data,
+          signData: _signData.message,
+        });
+
+        if (res.success) {
+          onUpdate();
+        } else {
+          onFail(res.message);
+        }
+      }
+      else {
+        alert('Sign fail!');
+      }
+      setLoading(false);
     } else {
-      onFail(res.message);
+      alert('fail', 'Please wallet connect!');
     }
-    setLoading(false);
   }
 
   return (

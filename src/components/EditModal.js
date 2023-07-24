@@ -77,11 +77,13 @@ const EditModal = ({
                         <p className="text-sm text-gray-500">
                           Please update variables for following users
                         </p>
-                        <div className="max-h-[12rem] overflow-auto mt-4">
-                          {addresses && addresses.length > 0 && addresses.map((item, index) => (
-                            <p key={`wallet-${index}`} className="text-sm text-gray-400 my-0.5">{item}</p>
-                          ))}
-                        </div>
+                        {addresses && addresses.length > 0 &&
+                          <div className="max-h-[12rem] overflow-auto mt-4">
+                            {addresses.map((item, index) => (
+                              <p key={index} className="text-sm text-gray-400 my-0.5">{item}</p>
+                            ))}
+                          </div>
+                        }
                       </div>
                       <div className="mt-4">
                         <Dropdown onChange={setField} />
@@ -89,7 +91,7 @@ const EditModal = ({
                       {field.type === 'number' ? (
                         <div className="mt-4">
                           <label htmlFor="value" className="block text-sm font-medium leading-6 text-gray-900">
-                            Value
+                            {field.desc}
                           </label>
                           <div className="relative mt-2 rounded-md shadow-sm">
                             <input
@@ -107,7 +109,7 @@ const EditModal = ({
                       ) : field.type === 'date' ? (
                         <div className="mt-4">
                           <label htmlFor="datepicker" className="block text-sm font-medium leading-6 text-gray-900">
-                            Value
+                            {field.desc}
                           </label>
                           <div className="relative mt-2 rounded-md shadow-sm">
                             <input
@@ -123,10 +125,33 @@ const EditModal = ({
                             />
                           </div>
                         </div>
+                      ) : field.type === 'array' ? (
+                        <div className="mt-4">
+                          <label htmlFor="value" className="block text-sm font-medium leading-6 text-gray-900">
+                            {field.desc}
+                          </label>
+                          <div className="relative mt-2 rounded-md shadow-sm">
+                            <input
+                              type="number"
+                              min={1}
+                              max={3}
+                              name="value"
+                              id="value"
+                              className="block w-full rounded-md border-0 py-1.5 pl-4 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              placeholder="0"
+                              value={value}
+                              onChange={(e) => setValue(+e.target.value)}
+                              disabled={loading}
+                            />
+                          </div>
+                        </div>
                       ) : null}
                     </div>
                   </div>
                 </div>
+                <br></br>
+                <br></br>
+                <br></br>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"

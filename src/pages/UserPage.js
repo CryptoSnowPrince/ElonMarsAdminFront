@@ -31,6 +31,7 @@ const UserPage = () => {
   }
 
   const [isAdmin, setIsAdmin] = useState(false)
+
   useEffect(() => {
     const fetchIsAdmin = async () => {
       if (curWeb3 && isAccount(curAccount)) {
@@ -101,44 +102,46 @@ const UserPage = () => {
           {curWeb3 && isAccount(curAccount) ? getDisplayString(curAccount, 6, 4) : `Wallet Connection`}
         </button>
       </div>
-      <h1 className='text-center text-[28px] font-medium pb-4'>Admin pannel</h1>
+      <h1 className='text-center text-[28px] font-medium pb-4'>Admin panel</h1>
       <div className="max-w-[72rem] mx-auto">
         {
-          isAdmin ? <UserEditSection
-            onUpdate={handleUpdate}
-            onFail={handleFail}
-          /> : <h1 className='text-center text-[28px] font-medium pb-4'>Not Admin</h1>
-        }
-        {/* <div className="mt-24 border border-[#e5e7eb] rounded-xl px-4 py-6 mt-6 sm:px-6 lg:px-8">
-          <div className="flex items-center">
-            <div className="flex flex-1">
-              <h1 className="font-semibold text-lg">Users Table</h1>
-            </div>
-            <div className="ml-8">
-              <button
-                type="button"
-                className="font-semibold text-white text-sm bg-[#4F70E5] rounded-md px-4 py-2 hover:bg-[#6366F1] disabled:bg-gray-500"
-                disabled={selected.length === 0}
-                onClick={handleEdit}
-              >Edit</button>
-            </div>
-          </div>
-          <div className="flow-root mt-8">
-            <UserTable
-              users={users}
-              selected={selected}
-              setSelected={setSelected}
+          isAdmin ? <>
+            <UserEditSection
+              onUpdate={handleUpdate}
+              onFail={handleFail}
             />
-          </div>
-        </div> */}
+            <div className="mt-24 border border-[#e5e7eb] rounded-xl px-4 py-6 mt-6 sm:px-6 lg:px-8">
+              <div className="flex items-center">
+                <div className="flex flex-1">
+                  <h1 className="font-semibold text-lg">Users Table</h1>
+                </div>
+                <div className="ml-8">
+                  <button
+                    type="button"
+                    className="font-semibold text-white text-sm bg-[#4F70E5] rounded-md px-4 py-2 hover:bg-[#6366F1] disabled:bg-gray-500"
+                    disabled={selected.length === 0}
+                    onClick={handleEdit}
+                  >Edit</button>
+                </div>
+              </div>
+              <div className="flow-root mt-8">
+                <UserTable
+                  users={users}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </div>
+            </div>
+          </> : <h1 className='text-center text-[28px] font-medium pb-4'>Not Admin</h1>
+        }
       </div>
-      {/* <EditModal
+      <EditModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
         addresses={selected}
         onUpdate={handleUpdate}
         onFail={handleFail}
-      /> */}
+      />
       <Notification
         open={openToast}
         onClose={() => setOpenToast(false)}

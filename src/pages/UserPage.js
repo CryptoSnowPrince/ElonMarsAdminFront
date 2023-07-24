@@ -30,7 +30,11 @@ const UserPage = () => {
     const resp = await callApi('user/all');
     console.log(resp)
     if (resp?.users) {
-      setUsers(resp.users);
+      if(resp.users && resp.users.length > 50) {
+        setUsers(resp.users.slice(0, 50));
+      } else {
+        setUsers(resp.users);
+      }
     }
   }
 
